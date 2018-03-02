@@ -24,10 +24,10 @@ class Moipv2 extends PaymentModule
 {
 	private $_html = '';
 	private $_postErrors = array();
-	const TOKEN_TEST = "8OKLQFT5XQZXU7CKXX43GPJOMIJPMSMF";
-	const KEY_TEST = "NT0UKOXS4ALNSVOXJVNXVKRLEOQCITHI5HDKW3LI";
-	const TOKEN_PROD = "EVCHBAUMKM0U4EE4YXIA8VMC0KBEPKN2";
-	const KEY_PROD = "4NECP62EKI8HRSMN3FGYOZNVYZOMBDY0EQHK9MHO";
+	const TOKEN_TEST = "SEU_TOKEN_DE_TESTE";
+	const KEY_TEST = "KEY_TESTE";
+	const TOKEN_PROD = "SEU_TOKEN_DE_PRODUCAO";
+	const KEY_PROD = "KEY_PRODUCAO";
 	public $moipv2Name;
 	public $extra_mail_vars;
 	public $MOIPV2_KEY_TOKEN;
