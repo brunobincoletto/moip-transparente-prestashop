@@ -1,6 +1,5 @@
-
 {*
-* 07-14 PrestaShop
+* 2017-2018 Moip Wirecard Brasil
 *
 * NOTICE OF LICENSE
 *
@@ -12,45 +11,35 @@
 * obtain it through the world-wide-web, please send an email
 * to license@prestashop.com so we can send you a copy immediately.
 *
-* DISCLAIMER
 *
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  07-14 PrestaShop SA
+*  @author MOIP DEVS - <prestashop@moip.com.br>
+*  @copyright  2017-2018 Moip Wirecard Brasil
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
 *}
 
 <p class="payment_module">    
-<form action="{$link->getModuleLink('moipv2', 'authorization', [], true)|escape:'html'}"  class="formulario" id="formulario" method="POST">
+<form action="{$link->getModuleLink('moipv2', 'authorization', [], true)|escape:'html'}"  class="form-moip" id="form-moip" method="POST">
 	
 
-	 <link rel="stylesheet" type="text/css" href="{$modules_dir}moipv2/script/default.css" />
+	 <link rel="stylesheet" type="text/css" href="{$this_path_ssl|escape:'htmlall':'UTF-8'}views/css/default.css" />
      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
      <script type="text/javascript" src="https://assets.moip.com.br/v2/moip.min.js"></script>
-     <script type="text/javascript" src="{$modules_dir}moipv2/script/getBin.js"></script>
-     <script type="text/javascript" src="{$modules_dir}moipv2/script/jquery.validate.js"></script>
-     <script type="text/javascript" src="{$modules_dir}moipv2/script/jquery.maskedinput.js"></script>
-     <script type="text/javascript" src="{$modules_dir}moipv2/script/moip.js"></script>
+     <script type="text/javascript" src="{$this_path_ssl|escape:'htmlall':'UTF-8'}views/js/getBin.js"></script>
+     <script type="text/javascript" src="{$this_path_ssl|escape:'htmlall':'UTF-8'}views/js/jquery.validate.js"></script>
+     <script type="text/javascript" src="{$this_path_ssl|escape:'htmlall':'UTF-8'}views/js/jquery.maskedinput.js"></script>
+     <script type="text/javascript" src="{$this_path_ssl|escape:'htmlall':'UTF-8'}views/js/moip.js"></script>
 		
-
+       
         <input type="hidden" name="paymentForm" value="" />
         <input type="hidden" name="paymentMethod" value="{if ($MOIPV2_CARTAO_ACEITE)}CREDIT_CARD{/if}" />
-        <input type="hidden" name="paymentBank" value=""/>
        	<input type="hidden" name="paymentHASH" id="paymentHASH" value=""/>
-        <input type="hidden" name="paymentUrl" value="{$MOIP_INSTALLMENT|escape:'html'}"/>
-        <input type="hidden" name="paymentOrderValue" value="{$orderValueBr}"/>
-        
-        <textarea id="id-chave-publica" class="chave-publica-moip" style="display:none !important;" autocomplete="off">{$publickey|escape:'html'}</textarea>
+        <input type="hidden" name="paymentOrderValue" value="{$orderValueBr|escape:'htmlall':'UTF-8'}"/>
+        <textarea id="id-chave-publica" class="chave-publica-moip" style="display:none !important;" autocomplete="off">{$publickey|escape:'htmlall':'UTF-8'}</textarea>
 
     {literal}
         <script type="text/javascript">
             $(document).ready(function(){
                 MoipPagamentos();
-
                 calcParcela();
             });
         </script>
@@ -61,17 +50,23 @@
     <div class="btn-moip-pg" data-toggle="buttons">
     {if ($MOIPV2_CARTAO_ACEITE)}
       <label class="btn btn-default active btn-lg btn-block btn-select-payment-moip" >
-        <input type="radio" name="payment" value="CREDIT_CARD" checked /><i class="fa fa-credit-card" aria-hidden="true"></i> Cartão de Crédito
+        <input type="radio" name="payment" value="CREDIT_CARD" checked />
+        <i class="fa fa-credit-card" aria-hidden="true"></i> 
+        <span class="name-moip-method">Cartão de Crédito</span>
       </label>
     {/if}
     {if $MOIPV2_BOLETO_ACEITE}
       <label class="btn btn-default btn-block btn-lg btn-select-payment-moip" >
-           <input type="radio" name="payment" value="BOLETO" /><i class="fa fa-barcode" aria-hidden="true"></i> Boleto Bancário
+           <input type="radio" name="payment" value="BOLETO" />
+           <i class="fa fa-barcode" aria-hidden="true"></i> 
+           <span class="name-moip-method">Boleto Bancário</span>
       </label>
     {/if}
     {if $MOIPV2_TEF_ACEITE}
       <label class="btn btn-default btn-block btn-lg btn-select-payment-moip">
-            <input type="radio" name="payment" value="ONLINE_BANK_DEBIT" /><i class="fa fa-money" aria-hidden="true"></i> Transf. Bancária
+            <input type="radio" name="payment" value="ONLINE_BANK_DEBIT" />
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span class="name-moip-method">Transf. Bancária</span>
       </label>
     {/if}
     </div>
@@ -152,14 +147,14 @@
                 <div class="col-md-12">
                     <label class="control-label label-moip-pg" for="parcelamentoCartao">Parcelas</label>
                     <select name="parcelamentoCartao" id="parcelamentoCartao" class="form-control">
-                        <option value="1" label="Pagamento à vista" title="Parcela única de R$ {$orderValueBr}">Pagamento à vista</option>
+                        <option value="1" label="Pagamento à vista" title="Pagamento à vista">Pagamento à vista</option>
                     </select>
                 </div>
                 <div class="col-md-12">
-                    <div class="parcelamentoCartao">Parcela única de R$ {$orderValueBr}</div>
+                    <div class="parcelamentoCartao">Parcela única de R$ {$orderValueBr|escape:'htmlall':'UTF-8'}</div>
                 </div>
                 <div class="col-md-12">
-                    <img src="{$modules_dir}moipv2/images/spinner.gif" class="spinner_moip" alt="Aguarde..."  style="display:none;"/>
+                   
                     <button class="exclusive moip-btn btn btn-lg btn-success" id="CREDIT_CARD" name="submit" type="submit">Concluir pedido <i class="icon-chevron-right right"></i></button> 
                 </div>   
                 <ul id="alert-area"></ul>
@@ -202,8 +197,12 @@
                 {if $MOIPV2_BOLETODISCOUNT}
                     <p>Pague com desconto!</p>
                 {/if}
-                <p>Você deverá efetuar o pagamento do boleto em até três (3) dias após sua impressão.</p>
-                <img src="{$modules_dir}moipv2/images/spinner.gif" class="spinner_moip" alt="Aguarde..."  style="display:none;" />
+                <p>{$MOIPV2_BOLETO_CHECKOUT|escape:'htmlall':'UTF-8'}</p>
+                <p>
+                    {l s='Você deverá efetuar o pagamento do boleto em até %s dias' sprintf=[$MOIPV2_BOLETO_DATE] mod='moipv2'}
+                </p>
+                
+                
               <button type="submit" class="exclusive moip-btn  btn btn-lg btn-success" id="BRADESCO">Concluir pedido <i class="icon-chevron-right right"></i></button>
                 
 
@@ -215,9 +214,11 @@
         <div class="escolha payform" id="ONLINE_BANK_DEBIT">
             <div id="div-debito" class="escolha-side-full">
                 <legend><i class="fa fa-money" aria-hidden="true"></i>  - Pagamento por transferência bancária</legend>
-                <p>Parcela única de R$ {$orderValueBr}  </p>
+                {if $MOIPV2_BOLETODISCOUNT}
+                    <p>Pague com desconto!</p>
+                {/if}
                 <p>Você será redirecionado ao site de seu banco para concluir o pagamento.</p>
-                <img src="{$modules_dir}moipv2/images/spinner.gif" class="spinner_moip" alt="Aguarde..." style="display:none;" />
+              
                 <button class="exclusive moip-btn btn btn-lg btn-success" id="ONLINE_BANK_DEBIT" name="submit" type="submit">Concluir pedido <i class="icon-chevron-right right"></i></button>
             </div>
         </div>

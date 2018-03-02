@@ -1,5 +1,5 @@
 {*
-* 2007-2014 PrestaShop
+* 2017-2018 Moip Wirecard Brasil
 *
 * NOTICE OF LICENSE
 *
@@ -11,114 +11,60 @@
 * obtain it through the world-wide-web, please send an email
 * to license@prestashop.com so we can send you a copy immediately.
 *
-* DISCLAIMER
 *
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2014 PrestaShop SA
+*  @author MOIP DEVS - <prestashop@moip.com.br>
+*  @copyright  2017-2018 Moip Wirecard Brasil
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
 *}
- <script type="text/javascript" src="../modules/moipv2/script/admin.js"></script>
-<div class="alert alert-info">
-
-
-<img src="../modules/moipv2/moipv2.png" style="float:left; margin-right:15px;" height="49">
-
-
-<p><strong>MOIP PAGAMENTOS - V2</strong></p>
-<p>Para configurar o seu módulo você deve selecionar um dos ambientes e após logar-se no moip você estará hapto a realizar suas transações.</p>
-	<hr>
-		
-
-				
-				<table class="moip-table">
-					<caption>MOIP Pagamento - Configuração de Pagamento</caption>
-					<thead>
-					<tr >
-						<th width="50%">
-						Produção - Ambiente de compras reais 
-							<span>
-								<a href="https://conta.moip.com.br/">Moip Produção</a>
-							</span>
-						</th>
-						<th width="50%" >
-							Sandbox - Ambiente destinado a testes 
-							<span>
-								<a href="https://conta-sandbox.moip.com.br/">Moip Sandbox</a>
-							</span>
-						</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td class="{$state_prod}">Status para vendas reais em Ambiente de Produção: {$state_prod}</td>
-						<td class="{$state_dev}">Status para vendas testes em Ambiente de Sandbox: {$state_dev}</td>
-					</tr>
-					<tr>
-						<td>
-							{if $ambiente == "producao"}
-							<div> <a href="{$url_process}" class="btn btn-primary" >Autorizar Moip em Produção</a></div>
+<script type="text/javascript" src="../modules/moipv2/views/admin/admin.js"></script>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Moip Wirecard Brasil</h1>
+			<div class="ambiente">
+				<p>
+					{if $ambiente == "producao"}
+						<span class="small">Ambiente de Produção</span>
+					{else}
+						<span class="small">Ambiente de Teste</span>
+					{/if}
+				</p>
+			</div>
+			<div class="typereceipt">
+				<p>
+					Tipo de recebimento:
+						<span class="type">
+							{if $MOIPV2_TYPE_RECEIPT == "1"}
+							Receber em 2 dias
+							{elseif $MOIPV2_TYPE_RECEIPT == "2"}
+							Receber em 14 dias
+							{elseif $MOIPV2_TYPE_RECEIPT == "3"}
+							Receber em 30 dias
+							{elseif $MOIPV2_TYPE_RECEIPT == "4"}
+							Recebimento definido pela conta Moip
 							{else}
-								<p>Você selecinou o ambiente de testes, para configurar o ambiente de produção altere e salve o 	AMBIENTE DE COMUNICAÇÃO</p>
+							Não há configuração de recibimento ainda.
 							{/if}
-						</td>
-						<td>
-							{if $ambiente == "sandbox"}
-								<div> <a href="{$url_process}" class="btn btn-primary" >Autorizar Moip em Sandbox</a></div>
-							{else}
-								<p>Você selecinou o ambiente de produção, para configurar o ambiente de teste altere e salve o 	AMBIENTE DE COMUNICAÇÃO</p>
-							{/if}
-						</td>
-					</tr>
-					
-					</tbody>
-				</table>
-						
-		
-
-
-</div>
-
-
-<style>
-	caption {
-	  font-size: 24px;
-	  padding-bottom: 15px;
-	}
-	.moip-table {
-		border:1px solid #C0C0C0;
-		border-collapse:collapse;
-		padding:5px;
-	}
-	.moip-table th {
-		border:1px solid #C0C0C0;
-		padding:5px;
-		background:#F0F0F0;
-	}
-	.moip-table td {
-		border:1px solid #C0C0C0;
-		padding:5px;
-	}
-	td.ativo {
-	  background-color: #8BC954;
-	  color: #fff;
-	  font-weight: bold;
-	}
-	td.inativo {
-	  background-color: #D04437;
-	  color: #fff;
-	  font-weight: bold;
-	}
-	table.moip-table {
-	  width: 100%;
-	}
-	.onclick{
-		display: none;
-		color: red;
-		font-size: 34px;
-	}
-</style>
+						</span>
+				</p>
+			</div>
+			{if $state_prod != 'inativo'}
+				<div class="status">
+					Seu aplicativo está {$state_prod|escape:'htmlall':'UTF-8'}
+				</div>
+			{/if}
+			<div class="oauth">
+					{if $state_prod == 'inativo'}
+						<a href="{$url_process|escape:'htmlall':'UTF-8'}" class="btn btn-primary">
+							Autorizar Aplicativo
+						</a>
+					{/if}
+			</div>
+			
+		</div>	
+	</div>
+<hr>
+<script type="text/javascript">
+	jQuery( window ).load(function() {
+		ChangeType();
+	});
+</script>
