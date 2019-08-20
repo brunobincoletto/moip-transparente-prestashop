@@ -172,7 +172,7 @@ class Moipv2OauthModuleFrontController extends ModuleFrontController
 		);
 		$webhooks          = array(
 			"events" => $status_controller,
-			"target" => _PS_BASE_URL_ . __PS_BASE_URI__ . "index.php?fc=module&module=moipv2&controller=webhooks",
+			"target" => Context::getContext()->shop->getBaseURL(true)."index.php?fc=module&module=moipv2&controller=webhooks",
 			"media" => "WEBHOOK"
 		);
 		if (Configuration::get('MOIPV2_ENDPOINT') == 1) {
